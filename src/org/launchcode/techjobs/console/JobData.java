@@ -3,6 +3,7 @@ package org.launchcode.techjobs.console;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.w3c.dom.ls.LSOutput;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,7 +15,8 @@ import java.util.List;
 /**
  * Created by LaunchCode
  */
-public class JobData {
+public class
+JobData {
 
     private static final String DATA_FILE = "resources/job_data.csv";
     private static Boolean isDataLoaded = false;
@@ -123,6 +125,25 @@ public class JobData {
             System.out.println("Failed to load job data");
             e.printStackTrace();
         }
+
     }
+    public static ArrayList<HashMap<String, String>> findByValue(String value) {
+
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+        loadData();
+
+        for (HashMap<String, String> hashMap : allJobs){
+
+            for(String key : hashMap.keySet()){
+
+                String keyValue = hashMap.get(key).toLowerCase();
+
+                if (keyValue.contains(value.toLowerCase()) && !jobs.contains(hashMap)) {
+                    jobs.add(hashMap);
+                }
+            }
+        }
+        return jobs;
+}
 
 }
